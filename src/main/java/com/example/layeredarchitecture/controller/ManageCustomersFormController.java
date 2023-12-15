@@ -157,12 +157,12 @@ public class ManageCustomersFormController {
                 //           CustomerDTO cd = new CustomerDTO(id,name,address);
 
                 CustomerDao customerDao = new CustomerDao();
-               boolean isSave =  customerDao.saveCustomer(id, name, address);
+                boolean isSave = customerDao.saveCustomer(id, name, address);
 
-               if (isSave){
-                   tblCustomers.getItems().add(new CustomerTM(id, name, address));
+                if (isSave) {
+                    tblCustomers.getItems().add(new CustomerTM(id, name, address));
 
-               }
+                }
 //                Connection connection = DBConnection.getDbConnection().getConnection();
 //                PreparedStatement pstm = connection.prepareStatement("INSERT INTO Customer (id,name, address) VALUES (?,?,?)");
 //                pstm.setString(1, id);
@@ -184,15 +184,15 @@ public class ManageCustomersFormController {
                 }
 
                 CustomerDao customerDao = new CustomerDao();
-               boolean update =  customerDao.updateCustomer(id, name, address);
+                boolean update = customerDao.updateCustomer(id, name, address);
 
-               if (update){
-                   new Alert(Alert.AlertType.CONFIRMATION,"Update Save!").show();
+                if (update) {
+                    new Alert(Alert.AlertType.CONFIRMATION, "Update Save!").show();
 
-               }else{
-                   new Alert(Alert.AlertType.WARNING,"Not Update").show();
+                } else {
+                    new Alert(Alert.AlertType.WARNING, "Not Update").show();
 
-               }
+                }
 
 //                Connection connection = DBConnection.getDbConnection().getConnection();
 //                PreparedStatement pstm = connection.prepareStatement("UPDATE Customer SET name=?, address=? WHERE id=?");
@@ -239,14 +239,14 @@ public class ManageCustomersFormController {
             }
 
             CustomerDao customerDao = new CustomerDao();
-           boolean isSave =  customerDao.deleteCustomer(id);
+            boolean isSave = customerDao.deleteCustomer(id);
 
-           if (isSave){
-               tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
-               tblCustomers.getSelectionModel().clearSelection();
-               initUI();
+            if (isSave) {
+                tblCustomers.getItems().remove(tblCustomers.getSelectionModel().getSelectedItem());
+                tblCustomers.getSelectionModel().clearSelection();
+                initUI();
 
-           }
+            }
 //            Connection connection = DBConnection.getDbConnection().getConnection();
 //            PreparedStatement pstm = connection.prepareStatement("DELETE FROM Customer WHERE id=?");
 //            pstm.setString(1, id);
@@ -265,15 +265,30 @@ public class ManageCustomersFormController {
 
     private String generateNewId() {
         try {
-            Connection connection = DBConnection.getDbConnection().getConnection();
-            ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
-            if (rst.next()) {
-                String id = rst.getString("id");
-                int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
-                return String.format("C00-%03d", newCustomerId);
-            } else {
-                return "C00-001";
-            }
+
+            CustomerDao customerDao = new CustomerDao();
+            String genrateId = customerDao.genarateID();
+
+            return genrateId;
+
+//            if (genrateId.isEmpty() || genrateId == null) {
+//                return "C00-001";
+//            } else {
+//                String id = getLastCustomerId();
+//                int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
+//                return String.format("C00-%03d", newCustomerId);
+//            }
+
+
+//            Connection connection = DBConnection.getDbConnection().getConnection();
+//            ResultSet rst = connection.createStatement().executeQuery("SELECT id FROM Customer ORDER BY id DESC LIMIT 1;");
+//            if (rst.next()) {
+//                String id = rst.getString("id");
+//                int newCustomerId = Integer.parseInt(id.replace("C00-", "")) + 1;
+//                return String.format("C00-%03d", newCustomerId);
+//            } else {
+//                return "C00-001";
+//            }
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, "Failed to generate a new id " + e.getMessage()).show();
         } catch (ClassNotFoundException e) {
@@ -285,11 +300,13 @@ public class ManageCustomersFormController {
             return "C00-001";
         } else {
             String id = getLastCustomerId();
-            int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
+                int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         }
 
     }
+
+
 
     private String getLastCustomerId() {
         List<CustomerTM> tempCustomersList = new ArrayList<>(tblCustomers.getItems());
