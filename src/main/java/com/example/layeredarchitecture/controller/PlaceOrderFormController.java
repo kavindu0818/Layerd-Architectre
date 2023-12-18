@@ -1,9 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.CustomerDao;
-import com.example.layeredarchitecture.dao.ItemDao;
-import com.example.layeredarchitecture.dao.OrderDAOImpl;
-import com.example.layeredarchitecture.dao.OrderDetailsDAOImpl;
+import com.example.layeredarchitecture.dao.*;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.model.ItemDTO;
@@ -36,7 +33,7 @@ import java.util.stream.Collectors;
 //import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.detail;
 
 
-public class PlaceOrderFormController {
+public class PlaceOrderFormController  {
 
     public AnchorPane root;
     public JFXButton btnPlaceOrder;
@@ -54,10 +51,9 @@ public class PlaceOrderFormController {
     public Label lblTotal;
     private String orderId;
 
-    OrderDAOImpl orderDAO = new OrderDAOImpl();
+    OrderDAO orderDAO = new OrderDAOImpl();
     CustomerDao customerDao = new CustomerDao();
-
-    OrderDetailsDAOImpl orderDetailsDAO = new OrderDetailsDAOImpl();
+    OrderDetailsDAO orderDetailsDAO = new  OrderDetailsDAOImpl();
 
     ItemDao itemDao = new ItemDao();
     public void initialize() throws SQLException, ClassNotFoundException {

@@ -10,7 +10,7 @@ import java.util.List;
 
 //import static jdk.javadoc.internal.doclets.formats.html.markup.HtmlStyle.detail;
 
-public class OrderDetailsDAOImpl {
+public class OrderDetailsDAOImpl implements OrderDetailsDAO {
 
 
     public boolean addOrderDetails(String oId, List<OrderDetailDTO> od) throws SQLException, ClassNotFoundException {

@@ -5,7 +5,7 @@ import com.example.layeredarchitecture.db.DBConnection;
 import java.sql.*;
 import java.time.LocalDate;
 
-public class OrderDAOImpl {
+public class OrderDAOImpl implements OrderDAO{
 
     public boolean orderSelect(String oId, LocalDate lo, String cusIdd) throws SQLException, ClassNotFoundException {
         Connection connection = null;
