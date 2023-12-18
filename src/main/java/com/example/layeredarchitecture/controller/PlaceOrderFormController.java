@@ -384,9 +384,10 @@ public class PlaceOrderFormController {
                 if (isSave1) {
                    boolean isSave2 = itemDao.updateItem(item);
 
+                }else{
+                    new Alert(Alert.AlertType.ERROR,"Not Update Item").show();
                 }
             }
-
 
             /*Transaction*/
 //        Connection connection = null;
@@ -441,14 +442,12 @@ public class PlaceOrderFormController {
 //                    return false;
 //                }
 //
-//            connection.commit();
-//            connection.setAutoCommit(true);
-//            return true;
 
-
-
+        }else {
+            new Alert(Alert.AlertType.ERROR,"Not Order Select").show();
         }
-        return false;
+
+        return true;
     }
 
 
