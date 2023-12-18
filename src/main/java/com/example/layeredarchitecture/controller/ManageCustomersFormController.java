@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.dao.CustomerDAOIN;
 import com.example.layeredarchitecture.dao.CustomerDao;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -38,6 +39,8 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
+    CustomerDAOIN customerDao = new CustomerDao();
+
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
         tblCustomers.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("name"));
@@ -70,7 +73,6 @@ public class ManageCustomersFormController {
         /*Get all customers*/
         try {
 
-            CustomerDao customerDao = new CustomerDao();
             ArrayList<CustomerDTO> allCustomer = customerDao.getAllCustomer();
 
             for (CustomerDTO c : allCustomer) {
@@ -156,7 +158,7 @@ public class ManageCustomersFormController {
 
                 //           CustomerDTO cd = new CustomerDTO(id,name,address);
 
-                CustomerDao customerDao = new CustomerDao();
+
                 boolean isSave = customerDao.saveCustomer(id, name, address);
 
                 if (isSave) {
@@ -183,7 +185,6 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
 
-                CustomerDao customerDao = new CustomerDao();
                 boolean update = customerDao.updateCustomer(id, name, address);
 
                 if (update) {
@@ -222,7 +223,6 @@ public class ManageCustomersFormController {
 //        pstm.setString(1, id);
 //        return pstm.executeQuery().next();
 
-        CustomerDao customerDao = new CustomerDao();
         boolean cusDelete = customerDao.existCustomer(id);
 
         return cusDelete;
@@ -238,7 +238,6 @@ public class ManageCustomersFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
             }
 
-            CustomerDao customerDao = new CustomerDao();
             boolean isSave = customerDao.deleteCustomer(id);
 
             if (isSave) {
@@ -266,7 +265,7 @@ public class ManageCustomersFormController {
     private String generateNewId() {
         try {
 
-            CustomerDao customerDao = new CustomerDao();
+
             String genrateId = customerDao.genarateID();
 
             return genrateId;
@@ -303,10 +302,7 @@ public class ManageCustomersFormController {
                 int newCustomerId = Integer.parseInt(id.replace("C", "")) + 1;
             return String.format("C00-%03d", newCustomerId);
         }
-
     }
-
-
 
     private String getLastCustomerId() {
         List<CustomerTM> tempCustomersList = new ArrayList<>(tblCustomers.getItems());

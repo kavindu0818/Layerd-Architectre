@@ -1,5 +1,6 @@
 package com.example.layeredarchitecture.controller;
 
+import com.example.layeredarchitecture.dao.ItemDAOIN;
 import com.example.layeredarchitecture.dao.ItemDao;
 import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.CustomerDTO;
@@ -39,6 +40,8 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
+    ItemDAOIN itemDao = new ItemDao();
+
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
         tblItems.getColumns().get(1).setCellValueFactory(new PropertyValueFactory<>("description"));
@@ -73,7 +76,6 @@ public class ManageItemsFormController {
         tblItems.getItems().clear();
         try {
 
-            ItemDao itemDao = new ItemDao();
            ArrayList <ItemDTO> itemAll =  itemDao.getAllItem();
             for (ItemDTO c : itemAll) {
                 tblItems.getItems().add(new ItemTM(c.getCode(), c.getDescription(), c.getUnitPrice(), c.getQtyOnHand()));
@@ -142,7 +144,6 @@ public class ManageItemsFormController {
                 new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
             }
 
-            ItemDao itemDao = new ItemDao();
             boolean isSave = itemDao.deleteItem(code);
 
             if (isSave){
@@ -198,7 +199,7 @@ public class ManageItemsFormController {
 
                 ItemDTO it = new ItemDTO(code,description,unitPrice,qtyOnHand);
 
-                ItemDao itemDao = new ItemDao();
+
                 boolean isSave = itemDao.saveItem(it);
                 //Save Item
 //                Connection connection = DBConnection.getDbConnection().getConnection();
@@ -264,13 +265,13 @@ public class ManageItemsFormController {
 //        pstm.setString(1, code);
 //        return pstm.executeQuery().next();
 
-        ItemDao itemDao = new ItemDao();
         boolean isSave  = itemDao.exiteItem(code);
         return isSave;
     }
 
 
     private String generateNewId() {
+
         try {
 //            Connection connection = DBConnection.getDbConnection().getConnection();
 //            ResultSet rst = connection.createStatement().executeQuery("SELECT code FROM Item ORDER BY code DESC LIMIT 1;");
@@ -281,9 +282,9 @@ public class ManageItemsFormController {
 //            } else {
 //                return "I00-001";
 //            }
-            ItemDao itemDao = new ItemDao();
-            String genId = itemDao.genrateID();
-            String genID;
+            return itemDao.genrateID();
+
+
 
         } catch (SQLException e) {
             new Alert(Alert.AlertType.ERROR, e.getMessage()).show();
