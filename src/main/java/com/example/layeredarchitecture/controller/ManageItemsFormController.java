@@ -1,11 +1,8 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.ItemDAOIN;
-import com.example.layeredarchitecture.dao.ItemDao;
-import com.example.layeredarchitecture.db.DBConnection;
-import com.example.layeredarchitecture.model.CustomerDTO;
+import com.example.layeredarchitecture.dao.ItemDAO;
+import com.example.layeredarchitecture.dao.ItemDaoImpl;
 import com.example.layeredarchitecture.model.ItemDTO;
-import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.example.layeredarchitecture.view.tdm.ItemTM;
 import com.jfoenix.controls.JFXButton;
 import javafx.application.Platform;
@@ -40,7 +37,7 @@ public class ManageItemsFormController {
     public TextField txtUnitPrice;
     public JFXButton btnAddNewItem;
 
-    ItemDAOIN itemDao = new ItemDao();
+    ItemDAO itemDao = new ItemDaoImpl();
 
     public void initialize() {
         tblItems.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("code"));
@@ -224,7 +221,7 @@ public class ManageItemsFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such item associated with the id " + code).show();
                 }
 
-                ItemDao itemDao = new ItemDao();
+                ItemDaoImpl itemDao = new ItemDaoImpl();
                 boolean isSave = itemDao.updateItem(code,description,unitPrice,qtyOnHand);
                 if(isSave){
                     ItemTM selectedItem = tblItems.getSelectionModel().getSelectedItem();

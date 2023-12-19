@@ -1,13 +1,12 @@
 package com.example.layeredarchitecture.dao;
 
-import com.example.layeredarchitecture.db.DBConnection;
 import com.example.layeredarchitecture.model.ItemDTO;
 
 import java.math.BigDecimal;
 import java.sql.*;
 import java.util.ArrayList;
 
-public interface ItemDAOIN {
+public interface ItemDAO extends CradeDAO{
 
    ArrayList<ItemDTO> getAllItem() throws SQLException, ClassNotFoundException;
 

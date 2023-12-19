@@ -1,8 +1,7 @@
 package com.example.layeredarchitecture.controller;
 
-import com.example.layeredarchitecture.dao.CustomerDAOIN;
-import com.example.layeredarchitecture.dao.CustomerDao;
-import com.example.layeredarchitecture.db.DBConnection;
+import com.example.layeredarchitecture.dao.CustomerDAO;
+import com.example.layeredarchitecture.dao.CustomerDaoImpl;
 import com.example.layeredarchitecture.model.CustomerDTO;
 import com.example.layeredarchitecture.view.tdm.CustomerTM;
 import com.jfoenix.controls.JFXButton;
@@ -39,7 +38,7 @@ public class ManageCustomersFormController {
     public TableView<CustomerTM> tblCustomers;
     public JFXButton btnAddNewCustomer;
 
-    CustomerDAOIN customerDao = new CustomerDao();
+    CustomerDAO customerDao = new CustomerDaoImpl();
 
     public void initialize() {
         tblCustomers.getColumns().get(0).setCellValueFactory(new PropertyValueFactory<>("id"));
@@ -185,7 +184,9 @@ public class ManageCustomersFormController {
                     new Alert(Alert.AlertType.ERROR, "There is no such customer associated with the id " + id).show();
                 }
 
-                boolean update = customerDao.updateCustomer(id, name, address);
+                CustomerDTO customerDTO = new CustomerDTO(id,name,address);
+
+                boolean update = customerDao.updateCustomer(customerDTO);
 
                 if (update) {
                     new Alert(Alert.AlertType.CONFIRMATION, "Update Save!").show();

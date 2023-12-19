@@ -8,8 +8,8 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.List;
 
-public interface OrderDetailsDAO {
+public interface OrderDetailsDAO extends CradeDAO{
 
-    public boolean addOrderDetails(String oId, List<OrderDetailDTO> od) throws SQLException, ClassNotFoundException;
+     boolean addOrderDetails(String oId, List<OrderDetailDTO> od) throws SQLException, ClassNotFoundException;
 
 }
